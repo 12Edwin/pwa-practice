@@ -1,8 +1,8 @@
-const CACHE_NAME = 'mi-pwa-cache-v1';
+const CACHE_NAME = 'todo-app-v1';
 const urlsToCache = [
     '/',
     '/index.html',
-    '/style.css',
+    '/styles.css',
     '/app.js',
     '/icon.png'
 ];
@@ -17,6 +17,11 @@ self.addEventListener('install', event => {
 self.addEventListener('fetch', event => {
     event.respondWith(
         caches.match(event.request)
-            .then(response => response || fetch(event.request))
+            .then(response => {
+                if (response) {
+                    return response;
+                }
+                return fetch(event.request);
+            })
     );
 });
