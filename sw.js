@@ -1,10 +1,10 @@
 const CACHE_NAME = 'todo-app-v1';
 const urlsToCache = [
-    '/',
-    '/index.html',
-    '/style.css',
-    '/app.js',
-    '/icon.png'
+    '/pwa-practice/',
+    '/pwa-practice/index.html',
+    '/pwa-practice/style.css',
+    '/pwa-practice/app.js',
+    '/pwa-practice/icon.png'
 ];
 
 self.addEventListener('install', event => {
