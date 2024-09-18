@@ -76,3 +76,58 @@ todoForm.addEventListener('submit', e => {
         todoInput.value = '';
     }
 });
+
+let deferredPrompt;
+
+window.addEventListener('beforeinstallprompt', (e) => {
+    // Prevenir que Chrome 67 y versiones anteriores muestren automáticamente el prompt
+    e.preventDefault();
+    // Guardar el evento para que se pueda activar más tarde
+    deferredPrompt = e;
+    // Actualizar la UI para notificar al usuario que puede instalar la PWA
+    showInstallPromotion();
+});
+
+function showInstallPromotion() {
+    const installButton = document.createElement('button');
+    installButton.textContent = 'Instalar aplicación';
+    installButton.addEventListener('click', installPWA);
+    document.body.appendChild(installButton);
+}
+
+function installPWA() {
+    // Ocultar el botón de instalación
+    this.style.display = 'none';
+    // Mostrar el prompt de instalación
+    deferredPrompt.prompt();
+    // Esperar por la respuesta del usuario
+    deferredPrompt.userChoice.then((choiceResult) => {
+        if (choiceResult.outcome === 'accepted') {
+            console.log('Usuario aceptó la instalación');
+        } else {
+            console.log('Usuario rechazó la instalación');
+        }
+        deferredPrompt = null;
+    });
+}
+
+// Detectar si la app ya está instalada
+window.addEventListener('appinstalled', (evt) => {
+    console.log('Aplicación instalada');
+});
+
+// Función para verificar si la app está siendo ejecutada en modo standalone (instalada)
+function isRunningStandalone() {
+    return (window.matchMedia('(display-mode: standalone)').matches) || (window.navigator.standalone) || document.referrer.includes('android-app://');
+}
+
+// Verificar al cargar la página
+if (isRunningStandalone()) {
+    console.log('La aplicación está instalada');
+} else {
+    console.log('La aplicación no está instalada');
+}
+
+console.log('La aplicación PWA está funcionando');
+
+// Resto del código...
