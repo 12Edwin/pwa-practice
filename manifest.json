@@ -2,7 +2,7 @@
   "name": "Mi PWA Todo",
   "short_name": "PWA Todo",
   "description": "Una simple aplicación de lista de tareas PWA",
-  "start_url": "/",
+  "start_url": "/pwa-practice",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#3367D6",
